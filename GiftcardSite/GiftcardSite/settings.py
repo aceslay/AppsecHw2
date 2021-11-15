@@ -143,5 +143,3 @@ STATIC_URL = '/static/'
 
 # Auth Backends
 AUTHENTICATION_BACKENDS = ['LegacySite.models.OurBackend']
-#auto field
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
