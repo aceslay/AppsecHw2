@@ -1,3 +1,4 @@
+from itertools import product
 import json
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -147,7 +148,7 @@ def gift_card_view(request, prod_num=0):
             return render(request, f"gift.html", context)
         amount = request.POST.get('amount', None)
         if amount is None or amount == '':
-            amount = prod.recommended_price
+            amount = product.recommended_price
         prod = Product.objects.get(product_id=prod_num)
         context['user'] = user_account
         num_cards = len(Card.objects.filter(user=user_account))
