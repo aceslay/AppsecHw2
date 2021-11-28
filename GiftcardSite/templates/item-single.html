@@ -60,6 +60,7 @@
               <!-- KG: I don't think the safe tag does what they thought
                    it does... -->
               <p>Endorsed by {{director}}!</p>
+              {% csrf_token %}
             {% else %}
               <p> For all your card buying needs! </p>
             {% endif %}
