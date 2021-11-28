@@ -52,7 +52,6 @@ six==1.14.0
 somepackage==1.2.3
 sqlparse==0.4.2
 ssh-import-id==5.10
-systemd-python==234
 testresources==2.0.1
 ubuntu-advantage-tools==20.3
 ubuntu-drivers-common==0.0.0
