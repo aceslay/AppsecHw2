@@ -46,6 +46,7 @@ There is an HTTPs vulnerbaility as well as part of a bug problems with an ssl/tl
 The problem can affec cookies being leaked. The attack can capture the header which will contain the user session id. It will allow the attacker to purchse things without advising the user first. Installed home brew first. Then
 installed django-sslserver
 add ssl server to settings.py
+the run the command python3 manage.py runsslserver 
 
 
 
