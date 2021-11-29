@@ -43,7 +43,13 @@ The edited version is card_query = Card.objects.filter(data = signature.encode()
 
 Attack 4
 There is an HTTPs vulnerbaility as well as part of a bug problems with an ssl/tls ran through burp suite.
-The problem can affec cookies being leaked. The attack can capture the header which will contain the user session id. It will allow the attacker to purchse things without advising the user first. Installed home installed sslserver and added sslserver to the settings.py file
+The problem can affec cookies being leaked. The attack can capture the header which will contain the user session id. It will allow the attacker to purchse things without advising the user first. Installed home brew first. Then
+brew install mkcert
+mkcert -install
+mkcert -cert-file cert.pem -key-file key.pem localhost 127.0.0.1:8000
+then installed pip install django-extensions Werkzeug
+add Django_extensions to installed apps in settings.py
+Run the server using python3 manage.py runsslserver
 
 
 
