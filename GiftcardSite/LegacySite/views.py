@@ -7,6 +7,7 @@ from . import extras
 from django.views.decorators.csrf import csrf_protect as csrf_protect
 from django.contrib.auth import login, authenticate, logout
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
 
 SALT_LEN = 16
 
