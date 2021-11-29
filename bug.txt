@@ -49,7 +49,8 @@ mkcert -install
 mkcert -cert-file cert.pem -key-file key.pem localhost 127.0.0.1:8000
 then installed pip install django-extensions Werkzeug
 add Django_extensions to installed apps in settings.py
-Run the server using pythin3 manage.py runserver_plus
+Run the server using pythin3 manage.py runsslserver
+
 
 
 
