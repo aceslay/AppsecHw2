@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django-cryptography',
+    'django_crypto_fields.apps.AppConfig',
     
     
     
