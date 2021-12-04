@@ -1,4 +1,4 @@
 Django==3.2.9
 Django-decouple==2.0
 Django-sslserver==0.22
-
+Django-cryptography==1.0
