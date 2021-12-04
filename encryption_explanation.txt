@@ -1,9 +1,15 @@
 Encrypting the Database 
 
-Installed the following to 
-models.py
+Settings.py added
 
-from django_cryptography.fields import encrypt
+INSTALLED_APPS = (
+        ...
+    'django_crypto_fields.apps.AppConfig',
+
+Installed the following to 
+models.py header
+
+from django_crypto_fields.fields import EncryptedTextField
 
 
 class MyModel(models.Model):
