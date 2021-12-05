@@ -99,7 +99,7 @@ def buy_card_view(request, prod_num=0):
         amount = request.POST.get('amount', None)
         if amount is None or amount == '':
             amount = prod.recommended_price
-        extras.write_card_data(card_file_path, prod, amount, request.user)
+        extras.write_card_data(card_file_path, prod, prod.recommended_price,user_account)
         card_file = open(card_file_path, 'rb')
         card = Card(data=card_file.read(), product=prod, amount=amount, fp=card_file_path, user=request.user)
         card.save()

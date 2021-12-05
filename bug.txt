@@ -83,6 +83,13 @@ receiving  'AnonymousUser' object is not iterable
 Fixed it by adding from django.contrib.auth.decorators import login_required
 to setting.py file
 
+Bug 6
+Couldnt gift to someone within the views.py file. 
+extras.write_card_data(card_file_path) was missing argument 
+to fix it inputted the following:
+
+extras.write_card_data(card_file_path, prod, prod.recommended_price,user_account)
+
 
 
 
