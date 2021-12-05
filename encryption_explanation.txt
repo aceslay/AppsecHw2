@@ -11,12 +11,11 @@ models.py header
 
 from django_crypto_fields.fields import EncryptedTextField
 
+Added the following EncryptedTextField()  where data = models.BinaryField(unique=True)  was located
 
-class MyModel(models.Model):
-    name = models.CharField(max_length=50)
-    sensitive_data = encrypt(models.CharField(max_length=50))
-    
-    This will encrypt anything trying to access the database
+This will encrypt anything trying to access the database
+
+*A django cryptography error my commit come up in Github actions but i completely uninstall django-cryptography 1.0. But the error is still appearing. Tried everything but still same error*
     
   
   
