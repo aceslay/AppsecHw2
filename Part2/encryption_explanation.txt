@@ -1,0 +1,31 @@
+Encrypting the Database 
+
+Settings.py added
+
+INSTALLED_APPS = (
+        ...
+    'django_crypto_fields.apps.AppConfig',
+
+Installed the following to 
+models.py header
+
+from django_crypto_fields.fields import EncryptedTextField
+
+Added the following EncryptedTextField()  where data = models.BinaryField(unique=True)  was located
+
+This will encrypt anything trying to access the database
+
+*A django cryptography error my commit come up in Github actions but i completely uninstall django-cryptography 1.0. But the error is still appearing. Tried everything but still same error*
+    
+  
+  
+  Key Management
+  
+  I used a .env file to store the keys. I used the following website to follow how to configure the .env file.
+  https://simpleisbetterthancomplex.com/2015/11/26/package-of-the-week-python-decouple.html
+  
+  As the website shows we can use python-decouple. I create a .env file with the configuration information on the above website. I adjusted the data to fit the project information. After i created the file and saved it to the main project. I had to then add the import information in settings.py:
+  
+  Added from decouple import config
+underneath import os in the settings.py file
+by adding this it will use the configuration function to call the keys in the .env file.
